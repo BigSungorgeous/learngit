@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            width: 400px;
+            height: 400px;
+            border: 1px solid #000;
+            margin-left: 150px;
+            float: left;
+            position: relative;
+        }
+
+        #app img {
+            width: 100%;
+            height: 100%;
+        }
+
+        #apple {
+            width: 400px;
+            height: 400px;
+            border: 1px solid #000;
+            margin-left: 50px;
+            float: left;
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
+
+        #xo {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: pink;
+            opacity: 0.5;
+            display: none;
+        }
+
+        #apple img {
+            height: 200%;
+            width: 200%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <img src="../4.png" alt="">
+        <div id="xo"></div>
+    </div>
+    <div id="apple">
+        <img src="../4.png" alt="">
+    </div>
+</body>
+<script>
+    var app = document.getElementById('app');
+    var xo = document.getElementById('xo');
+    var apple = document.getElementById('apple');
+    var rimg = apple.getElementsByTagName('img')[0];
+    function getPosition(e) {
+        var   e  = e || window.event;
+        var top  = e.clientY - app.offsetTop - apple.offsetHeight/2;//clientX,clientY是相对于浏览器的位置信息；offsetTop是相对于浏览器的高度
+        var left = e.clientX - app.offsetLeft - apple.offsetWidth/2;
+        console.log(top);
+        console.log(left);
+        var maxTop = app.offsetHeight - xo.offsetHeight;//获取纵向的最大的移动距离
+        var maxLeft = app.offsetWidth - xo.offsetWidth;//获取横向的最大的移动距离
+        var minTop = 0;
+        var minLeft = 0;
+        var mx;//获取小滑块的移动的X位置；
+        var my;//获取小滑块的移动的Y位置
+        if (top < minTop) {
+            xo.style.top = minTop + "px";
+            mx=minTop;
+        }else if(top>maxTop){
+            xo.style.top=maxTop + "px";
+            mx = maxtop;
+        }else{
+            xo.style.top = top + "px";
+            mx = top;
+        }
+        if (left < minLeft) {
+            xo.style.left = minLeft + "px";
+            my=minLeft;
+        }else if(left>maxLeft){
+            xo.style.left=maxLeft + "px";
+            my = maxLeft;
+        }else{
+            xo.style.left = left + "px";
+            my = left;
+        }
+        rimg.style.top = -mx*2 + "px";
+        rimg.style.left = -my*2 + "px";
+    }
+    app.onmouseenter = function (e) {
+        var  e = e || window.event;
+        apple.style.display = "block";
+        getPosition();
+        xo.style.display = "block";
+    }
+    app.onmousemove = function (e) {
+        var e = e || window.event;
+        getPosition();
+    }
+  app.onmouseleave=function(e){
+      var e = e || window.event;
+      apple.style.display="none";
+      xo.style.display = "none"
+  }
+</script>
+
+</html>
